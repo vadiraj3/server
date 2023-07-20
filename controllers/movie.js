@@ -9,7 +9,7 @@ const User = require('../model/User');
 const url = require('url');
 
 const getMovies = async (req, res) => {
-	const result = await MovieModel.getMovies(req.query.page);
+	const result = await MovieModel.getMovies(parseInt(req.query.page));
 	res.status(StatusCodes.CREATED).json({ msg: 'Successs', result });
 };
 
@@ -18,11 +18,11 @@ const getMoviesByGenre = async (req, res) => {
 	let movieIds = '';
 	let result = '';
 	if (genreId == 'top_rated' || genreId == 'upcoming' || genreId == 'popular') {
-		result = await MovieModel.getMoviesByGenreType(genreId, page);
+		result = await MovieModel.getMoviesByGenreType(genreId, parseInt(page));
 	} else {
 		movieIds = await MovieModel.getMoviesByGenre(
 			req.query.genreId,
-			req.query.page
+			parseInt(req.query.page)
 		);
 
 		const movie = [];
